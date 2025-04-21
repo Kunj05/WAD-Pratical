@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Song List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-5">
+  <h1 class="mb-4">🎶 Songs List (Total: <%= count %>)</h1>
+
+  <form action="/add" method="POST" class="mb-4">
+    <div class="row g-2">
+      <div class="col"><input name="songname" class="form-control" placeholder="Song Name" required></div>
+      <div class="col"><input name="film" class="form-control" placeholder="Film Name" required></div>
+      <div class="col"><input name="music_director" class="form-control" placeholder="Music Director" required></div>
+      <div class="col"><input name="singer" class="form-control" placeholder="Singer" required></div>
+      <div class="col"><input name="actor" class="form-control" placeholder="Actor"></div>
+      <div class="col"><input name="actress" class="form-control" placeholder="Actress"></div>
+      <div class="col"><button class="btn btn-primary">Add Song</button></div>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Song Name</th>
+        <th>Film</th>
+        <th>Music Director</th>
+        <th>Singer</th>
+        <th>Actor</th>
+        <th>Actress</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% songs.forEach(song => { %>
+        <tr>
+          <td><%= song.songname %></td>
+          <td><%= song.film %></td>
+          <td><%= song.music_director %></td>
+          <td><%= song.singer %></td>
+          <td><%= song.actor || '-' %></td>
+          <td><%= song.actress || '-' %></td>
+          <td>
+            <a href="/delete/<%= song.songname %>" class="btn btn-sm btn-danger">Delete</a>
+            <a href="/update/<%= song.songname %>" class="btn btn-sm btn-warning">Add Actor/Actress</a>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>
