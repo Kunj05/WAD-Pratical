@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mobile Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery Mobile CDN -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <style>
+    .custom-footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 10px 0;
+    }
+    .product-img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🏠 Home Page -->
+  <div data-role="page" id="home">
+    <div data-role="header">
+      <h1>Mobile Store</h1>
+    </div>
+
+    <div data-role="content">
+      <p>Welcome to our mobile shop. Explore the latest smartphones and deals.</p>
+      <a href="#products" class="ui-btn ui-icon-grid ui-btn-icon-left">View Products</a>
+      <a href="#offers" class="ui-btn ui-icon-tag ui-btn-icon-left">Latest Offers</a>
+      <a href="#contact" class="ui-btn ui-icon-mail ui-btn-icon-left">Contact Us</a>
+    </div>
+
+    <div data-role="footer" class="custom-footer">
+      <p>&copy; 2025 Mobile Store</p>
+    </div>
+  </div>
+
+  <!-- 📱 Products Page -->
+  <div data-role="page" id="products">
+    <div data-role="header">
+      <h1>Smartphones</h1>
+    </div>
+
+    <div data-role="content">
+      <ul data-role="listview" data-inset="true">
+        <li>
+          <img src="https://via.placeholder.com/150" class="product-img">
+          <h2>iPhone 15</h2>
+          <p>Price: ₹79,999</p>
+        </li>
+        <li>
+          <img src="https://via.placeholder.com/150" class="product-img">
+          <h2>Samsung Galaxy S24</h2>
+          <p>Price: ₹74,999</p>
+        </li>
+        <li>
+          <img src="https://via.placeholder.com/150" class="product-img">
+          <h2>OnePlus 12</h2>
+          <p>Price: ₹64,999</p>
+        </li>
+      </ul>
+      <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Back to Home</a>
+    </div>
+  </div>
+
+  <!-- 💸 Offers Page -->
+  <div data-role="page" id="offers">
+    <div data-role="header">
+      <h1>Exclusive Offers</h1>
+    </div>
+
+    <div data-role="content">
+      <ul data-role="listview" data-inset="true">
+        <li><h2>Flat 10% off on iPhone 15</h2><p>Use Code: IPHONE10</p></li>
+        <li><h2>Free Earbuds with OnePlus 12</h2><p>Limited time only!</p></li>
+        <li><h2>EMI Options Available</h2><p>On all devices above ₹15,000</p></li>
+      </ul>
+      <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Back to Home</a>
+    </div>
+  </div>
+
+  <!-- 📞 Contact Page -->
+  <div data-role="page" id="contact">
+    <div data-role="header">
+      <h1>Contact Us</h1>
+    </div>
+
+    <div data-role="content">
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email">
+
+        <label for="message">Message:</label>
+        <textarea name="message" id="message"></textarea>
+
+        <input type="submit" value="Send">
+      </form>
+      <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Back to Home</a>
+    </div>
+  </div>
+
+</body>
+</html>

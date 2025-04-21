@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Form</title>
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .signup-form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    .signup-form h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+    }
+
+    .terms {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .message-container {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+  }
+  
+  .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+  }
+  
+  .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+  }
+  </style>
+</head>
+<body>
+
+<form class="signup-form" id="signupForm" method="POST">
+  <h2>Signup Form</h2>
+  <div id="message" class="message-container"></div>
+  <div class="form-group">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required pattern="[a-zA-Z\s]+" 
+           title="Name must contain only letters and spaces.">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required minlength="8" 
+           title="Password must be at least 8 characters long.">
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" 
+           title="Phone number must be 10 digits long.">
+  </div>
+
+  <div class="form-group terms">
+    <input type="checkbox" id="terms" name="terms" required>
+    <label for="terms">I agree to the <a href="terms.html">Terms and Conditions</a></label>
+  </div>
+
+  <input type="submit" value="Sign Up">
+  <button onclick="window.location.href='userlist.html'" 
+        style="margin-top: 10px; 
+               background-color: #4CAF50; 
+               color: white; 
+               padding: 10px; 
+               border: none; 
+               border-radius: 5px; 
+               cursor: pointer; 
+               width: 100%;">
+    View Registered Users
+</button>
+</form>
+
+
+<script>
+  // Array to store users
+  // Replace your current script with this improved version
+document.addEventListener('DOMContentLoaded', function() {
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+  const signupForm = document.getElementById('signupForm');
+  const messageDiv = document.getElementById('message');
+
+  function showMessage(message, type) {
+      if (!messageDiv) {
+          console.error('Message element not found');
+          return;
+      }
+      messageDiv.textContent = message;
+      messageDiv.className = `message-container ${type}`;
+      messageDiv.style.display = 'block';
+      
+      // Auto-hide message after 3 seconds
+      setTimeout(() => {
+          messageDiv.style.display = 'none';
+      }, 3000);
+  }
+
+  signupForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Enhanced validation
+      const userData = {
+          name: document.getElementById('name').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          password: document.getElementById('password').value
+      };
+
+      //User should be different
+      const emailExists = users.some(user => user.email === userData.email);
+      if (emailExists) {
+          showMessage('This email is already registered!', 'error');
+          return;
+      }
+
+      // Additional validation checks
+      if (!userData.name.match(/^[a-zA-Z\s]+$/)) {
+          showMessage('Name must contain only letters and spaces', 'error');
+          return;
+      }
+
+      if (!userData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+          showMessage('Please enter a valid email address', 'error');
+          return;
+      }
+
+      if (!userData.phone.match(/^[0-9]{10}$/)) {
+          showMessage('Phone number must be 10 digits', 'error');
+          return;
+      }
+
+      if (userData.password.length < 8) {
+          showMessage('Password must be at least 8 characters long', 'error');
+          return;
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://jsonplaceholder.typicode.com/users', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+              try {
+                  if (xhr.status === 201) {
+                      users.push(userData);
+                      localStorage.setItem('users', JSON.stringify(users));
+                      showMessage('Registration successful!', 'success');
+                      window.location.href = 'login.html';
+                      signupForm.reset();
+                  } else {
+                      throw new Error('Registration failed');
+                  }
+              } catch (error) {
+                  showMessage('Error: ' + error.message, 'error');
+              }
+          }
+      };
+      
+      // Handle network errors
+      xhr.onerror = function() {
+          showMessage('Network error occurred', 'error');
+      };
+      
+      try {
+          xhr.send(JSON.stringify(userData));
+      } catch (error) {
+          showMessage('Error sending data: ' + error.message, 'error');
+      }
+  });
+});
+</script>
+
+</body>
+</html>
